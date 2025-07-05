@@ -1,0 +1,9 @@
+# Ignore Cache
+__pycache__/
+/cache/
+
+# Ignore data generated during execution
+# /data
+
+# Ignore virtual environments
+venv/
