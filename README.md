@@ -25,7 +25,7 @@ Este repositório contém:
 
 ```bash
 # Clone
-git clone https://github.com/seu-usuario/knapsack-solvers.git
+git clone https://github.com/ChrystianMelo/knapsack-solvers.git
 cd knapsack-solvers
 
 # Configura o projeto
