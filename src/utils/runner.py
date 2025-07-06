@@ -9,7 +9,7 @@ from utils.io import convert, discover_instances, load_completed, load_instance
 from utils.timeout import Timeout
 import utils.solvers
 
-TIME_LIMIT = 600  # 1_800 # 30min
+TIME_LIMIT = 1_800  # 30min
 SolverFn = Callable[..., Tuple[int, bool]]
 
 
