@@ -71,7 +71,7 @@ def knapsack_fptas(items: List[Tuple[int, int]], W: int, eps: float = 0.1):
 
     mu = eps * vmax / n
 
-    v_scaled = [int(v // mu) for _, v in items] 
+    v_scaled = [int(v // mu) for _, v in items]
     V_sum = sum(v_scaled)
 
     INF = W + 1
@@ -99,3 +99,23 @@ def knapsack_fptas(items: List[Tuple[int, int]], W: int, eps: float = 0.1):
     sol.reverse()
 
     return val_aprox, sol
+
+
+def knapsack_two_approx(items: List[Tuple[int, int]], W: int) -> Tuple[int, List[int]]:
+    """ Algoritmo 2-aproximativo para a Mochila Binária. """
+    idx_sorted = sorted(range(len(items)),
+                        key=lambda i: items[i][1] / items[i][0],
+                        reverse=True)
+
+    w_acc = v_greedy = 0
+    chosen = []
+    for i in idx_sorted:
+        w, v = items[i]
+        if w_acc + w <= W:
+            w_acc += w
+            v_greedy += v
+            chosen.append(i)
+
+    best_single_value = max((v for w, v in items if w <= W), default=0)
+    value = max(v_greedy, best_single_value)
+    return value, chosen

@@ -16,14 +16,21 @@ SolverFn = Callable[..., Tuple[int, bool]]
 def bnb(path: Path):
     '''Resolve a mochila usando Branch-and-Bound exato.'''
     items, W = load_instance(path)
-    value, _sel = utils.solvers.knapsack_bnb(items, W)
+    value, _ = utils.solvers.knapsack_bnb(items, W)
     return value, True
 
 
 def aproximativo(path: Path, eps: float):
     '''Resolve a mochila com FPTAS (erro ε).'''
     items, W = load_instance(path)
-    value, _sel = utils.solvers.knapsack_fptas(items, W, eps)
+    value, _ = utils.solvers.knapsack_fptas(items, W, eps)
+    return value, True
+
+
+def approx2(path: Path):
+    """Resolve a mochila com o algoritmo 2-aproximativo."""
+    items, W = load_instance(path)
+    value, _ = utils.solvers.knapsack_two_approx(items, W)
     return value, True
 
 
@@ -78,9 +85,10 @@ def run(epsilon=float, force=bool, DATA_DIRS=List[Path], RESULTS_DIR=Path) -> No
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
     tasks: List[Tuple[str, SolverFn, Path]] = [
-        ("bnb", bnb, RESULTS_DIR / "bnb_results.csv"),
-        (f"aprox_eps{epsilon}", functools.partial(aproximativo, eps=epsilon),
-         RESULTS_DIR / "aprox_results.csv"),
+        ("bnb",         bnb,          RESULTS_DIR / "bnb_results.csv"),
+        ("2approx",     approx2,      RESULTS_DIR / "2approx_results.csv"),
+        (f"fptas_eps{epsilon}", functools.partial(aproximativo, eps=epsilon),
+         RESULTS_DIR / "fptas_results.csv"),
     ]
 
     instances = [p for p in discover_instances(
