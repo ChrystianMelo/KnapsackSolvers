@@ -4,10 +4,9 @@ import csv
 from pathlib import Path
 from typing import List
 
+
 def load_instance(path: Path) -> tuple[list[tuple[int, int]], int]:
-    """
-    Lê instâncias do professor no formato Unicauca/Kaggle.
-    """
+    '''Lê *_info.csv* (capacidade) e *_items.csv* (itens) e devolve (itens, capacidade).'''
     stem = path.name.replace('_items.csv', '').replace('_info.csv', '')
     folder = path.parent
     info = folder / f"{stem}_info.csv"
@@ -27,7 +26,7 @@ def load_instance(path: Path) -> tuple[list[tuple[int, int]], int]:
 
 
 def discover_instances(DATA_DIRS) -> List[Path]:
-    """Return a sorted list with every instance file found under DATA_DIRS."""
+    '''Percorre os diretórios dados e devolve lista ordenada de arquivos-instância.'''
     instances: List[Path] = []
     for root in DATA_DIRS:
         if root.exists():
@@ -36,7 +35,7 @@ def discover_instances(DATA_DIRS) -> List[Path]:
 
 
 def load_completed(csv_path: Path) -> set[str]:
-    """Return the set of instance basenames already present in *csv_path*."""
+    '''Lê o CSV de resultados e devolve o conjunto de instâncias já processadas.'''
     if not csv_path.exists():
         return set()
     with csv_path.open(newline="", encoding="utf-8") as fh:
@@ -44,6 +43,7 @@ def load_completed(csv_path: Path) -> set[str]:
 
 
 def convert(txt: Path) -> None:
+    '''Converte .txt (valores decimais) em _info/_items.csv (valores inteiros) preservando fator de escala.'''
     stem, folder = txt.stem, txt.parent
     with txt.open() as fh:
         n, cap = map(Decimal, fh.readline().split())

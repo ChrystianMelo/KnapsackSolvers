@@ -10,23 +10,26 @@ from utils.io import convert, discover_instances, load_completed, load_instance
 from utils.timeout import Timeout
 import utils.solvers
 
-TIME_LIMIT = 600
+TIME_LIMIT = 600  # 1_800 # 30min
 SolverFn = Callable[..., Tuple[int, bool]]
 
 
 def bnb(path: Path):
+    '''Resolve a mochila usando Branch-and-Bound exato.'''
     items, W = load_instance(path)
     value, _sel = utils.solvers.knapsack_bnb(items, W)
     return value, True
 
 
 def aproximativo(path: Path, eps: float):
+    '''Resolve a mochila com FPTAS (erro ε).'''
     items, W = load_instance(path)
     value, _sel = utils.solvers.knapsack_fptas(items, W, eps)
     return value, True
 
 
 def _peak_rss_mb() -> float:
+    '''Retorna o pico de memória (RSS) em MB medido via tracemalloc.'''
     _, peak = tracemalloc.get_traced_memory()
     return peak / (1024 ** 2)
 
@@ -37,6 +40,7 @@ def run_solver(
     *,
     eps: float,
 ) -> Tuple[str, Union[float, str], Union[float, str], Union[int, str], str]:
+    '''Executa o solver com timeout, mede tempo/memória e devolve linha de resultado.'''
     start = time.perf_counter()
     tracemalloc.start()
     status = "ok"
@@ -69,7 +73,8 @@ def run_solver(
     )
 
 
-def run(epsilon=float, force = bool) -> None:
+def run(epsilon=float, force=bool, DATA_DIRS=List[Path], RESULTS_DIR=Path) -> None:
+    '''Dispara todos os solvers sobre todas as instâncias e grava CSVs de saída.'''
     RESULTS_DIR = Path("results")
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -79,10 +84,8 @@ def run(epsilon=float, force = bool) -> None:
          RESULTS_DIR / "aprox_results.csv"),
     ]
 
-    instances = [p for p in discover_instances([
-        Path("data/large_scale"),
-        Path("data/low_dimensional"),
-    ]) if p.name.endswith('.csv')]
+    instances = [p for p in discover_instances(
+        DATA_DIRS) if p.name.endswith('.csv')]
 
     if not instances:
         sys.stderr.write(

@@ -4,14 +4,7 @@ import math
 
 
 def knapsack_bnb(items: List[Tuple[int, int]], W: int):
-    """
-    Resolve a mochila 0-1 por Branch-and-Bound (best-first).
-
-    items : lista de pares (peso, valor)
-    W     : capacidade inteira
-
-    Retorna (valor ótimo, lista de índices dos itens escolhidos)
-    """
+    '''Branch-and-Bound best-first para mochila 0-1; devolve valor ótimo e itens escolhidos.'''
     n = len(items)
 
     order = sorted(
@@ -69,15 +62,7 @@ def knapsack_bnb(items: List[Tuple[int, int]], W: int):
 
 
 def knapsack_fptas(items: List[Tuple[int, int]], W: int, eps: float = 0.1):
-    """
-    FPTAS (1-eps)-aproximado para a mochila.
-
-    items : lista (peso, valor)
-    W     : capacidade
-    eps   : 0 < eps < 1
-
-    Retorna (valor_aprox, subconjunto_itens)
-    """
+    '''FPTAS (1-ε) para mochila; devolve valor aproximado e itens escolhidos.'''
     n = len(items)
     vmax = max(v for _, v in items)
     mu = eps * vmax / n
