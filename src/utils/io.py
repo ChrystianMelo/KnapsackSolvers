@@ -1,7 +1,8 @@
+import math
+from decimal import Decimal
 import csv
 from pathlib import Path
-from typing import List, Tuple
-
+from typing import List
 
 def load_instance(path: Path) -> tuple[list[tuple[int, int]], int]:
     """
@@ -40,3 +41,32 @@ def load_completed(csv_path: Path) -> set[str]:
         return set()
     with csv_path.open(newline="", encoding="utf-8") as fh:
         return {row["instance"] for row in csv.DictReader(fh)}
+
+
+def convert(txt: Path) -> None:
+    stem, folder = txt.stem, txt.parent
+    with txt.open() as fh:
+        n, cap = map(Decimal, fh.readline().split())
+        raw = [tuple(map(Decimal, ln.split())) for ln in fh if ln.strip()]
+
+    def places(x: Decimal) -> int:
+        t = x.as_tuple()
+        return -t.exponent if t.exponent < 0 else 0
+
+    d = max(max(places(v), places(w)) for v, w in raw)
+    m = 10 ** d
+
+    cap_i = int(cap * m)
+    items_i = [(int(w * m), int(v * m)) for v, w in raw]
+
+    with (folder / f"{stem}_info.csv").open("w", newline="") as fh:
+        csv.writer(fh).writerow(["c", cap_i])
+
+    items_csv = folder / f"{stem}_items.csv"
+    with items_csv.open("w", newline="") as fh:
+        wcsv = csv.writer(fh)
+        wcsv.writerow(["item", "value", "weight", "sol"])
+        for i, (w_i, v_i) in enumerate(items_i, 1):
+            wcsv.writerow([i, v_i, w_i, 0])
+
+    print("✓", txt.name, f"(×{m} para inteiros)")
