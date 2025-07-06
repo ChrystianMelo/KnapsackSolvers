@@ -16,8 +16,8 @@ Este repositório contém:
 | `reports/`                   | Artigo científico em LaTeX (template SBC) + gráficos e tabelas finais.                      |
 | `results/`                   | Saídas brutas: tempos, uso de memória, qualidade da solução.                                |
 | `requirements.txt`           | Facilidades de instalação e automação.                                                      |
-| `config.bat` / `config.sh`   | Atalho: ativa venv + executa workflow
-| `run.bat` / `run.sh`         | Executável para rodar o projeto
+| `config.bat`                 | Atalho: ativa venv + executa workflow
+| `run.bat`                    | Executável para rodar o projeto
 
 ---
 ## Pseudo-algoritmos
