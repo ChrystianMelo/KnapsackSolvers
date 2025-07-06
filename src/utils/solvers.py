@@ -65,9 +65,13 @@ def knapsack_fptas(items: List[Tuple[int, int]], W: int, eps: float = 0.1):
     '''FPTAS (1-ε) para mochila; devolve valor aproximado e itens escolhidos.'''
     n = len(items)
     vmax = max(v for _, v in items)
+
+    if vmax == 0:
+        return 0, []
+
     mu = eps * vmax / n
 
-    v_scaled = [math.floor(v / mu) for _, v in items]
+    v_scaled = [int(v // mu) for _, v in items] 
     V_sum = sum(v_scaled)
 
     INF = W + 1
