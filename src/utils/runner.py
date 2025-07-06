@@ -1,7 +1,6 @@
 import csv
 import functools
 from pathlib import Path
-import argparse
 import sys
 import time
 import tracemalloc
