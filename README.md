@@ -12,7 +12,7 @@ Este repositório contém:
 |------------------------------|----------------------------------------------------------------------------------------------|
 | `src/`                       | Implementações em **Python 3** dos algoritmos: BnB, FPTAS, heurística 2-aproximada.          |
 | `experiments/`               | Scripts para executar lote de testes, coletar métricas e gerar tabelas CSV.                 |
-| `data/`                      | Instâncias de teste (low-dimensional e large-scale). **Não versionadas** ↠ baixar via script |
+| `data/`                      | Instâncias de teste (low-dimensional e large-scale).                                         |
 | `reports/`                   | Artigo científico em LaTeX (template SBC) + gráficos e tabelas finais.                      |
 | `results/`                   | Saídas brutas: tempos, uso de memória, qualidade da solução.                                |
 | `requirements.txt`           | Facilidades de instalação e automação.                                                      |
