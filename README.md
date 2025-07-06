@@ -95,6 +95,24 @@ Procedure FPTAS-Knapsack(items[1…n], W, ε ∈ (0,1))
  11. Return (valor_aprox, conjunto_itens)
 ```
 
+###  Algoritmo 2-aproximativo <br>
+<sup> Inspirado no material [Aula 13 – Algoritmos Aproximativos, slides sobre Vertex Cover 2-aprox.]</sup>
+
+```text
+Procedure TwoApprox-Knapsack(items[1..n], W)
+    # cada item i possui peso wi e valor vi
+1.  Ordene os itens por densidade decrescente: di ← vi / wi
+2.  peso_total   ← 0
+    valor_guloso ← 0
+3.  Para cada item (wi , vi ) na lista ordenada:
+        se peso_total + wi ≤ W então
+            peso_total   ← peso_total   + wi
+            valor_guloso ← valor_guloso + vi
+4.  valor_item ←  max { vi | wi ≤ W }        # melhor item avulso
+5.  valor_alg  ←  max(valor_guloso, valor_item)
+6.  Return valor_alg                          # garante ≤ 2 · OPT
+```
+
 ---
 ## 📥 Instalação
 
