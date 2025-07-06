@@ -81,8 +81,6 @@ def run_solver(
 
 def run(epsilon=float, force=bool, DATA_DIRS=List[Path], RESULTS_DIR=Path) -> None:
     '''Dispara todos os solvers sobre todas as instâncias e grava CSVs de saída.'''
-    RESULTS_DIR = Path("results")
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
     tasks: List[Tuple[str, SolverFn, Path]] = [
         ("bnb",         bnb,          RESULTS_DIR / "bnb_results.csv"),
