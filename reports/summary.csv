@@ -1,0 +1,4 @@
+algorithm,instances,runs,avg_time,med_time,max_time,timeout_rate,avg_mem,avg_profit,success_rate
+2approx_results,14,14,0.0019,0.0007,0.0069,0.0,0.0456,34364323.4286,1.0
+bnb_results,14,14,2.1875,0.0013,30.5908,0.0,15.9888,34364336.9286,1.0
+fptas_results,14,14,43.4568,0.0478,475.6328,0.2143,1.8309,43676163.9091,0.7857

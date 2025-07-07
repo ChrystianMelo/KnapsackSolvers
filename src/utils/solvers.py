@@ -1,6 +1,5 @@
 from typing import List, Tuple
 import heapq
-import math
 
 
 def knapsack_bnb(items: List[Tuple[int, int]], W: int):

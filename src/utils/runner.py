@@ -53,7 +53,6 @@ def run_solver(
     try:
         with Timeout(TIME_LIMIT):
             if solver is aproximativo:
-
                 value, feasible = solver(instance, eps)
             else:
                 value, feasible = solver(instance)
@@ -90,7 +89,7 @@ def run(epsilon=float, force=bool, DATA_DIRS=List[Path], RESULTS_DIR=Path) -> No
     ]
 
     instances = [p for p in discover_instances(
-        DATA_DIRS) if p.name.endswith('.csv')]
+        DATA_DIRS) if p.name.endswith('_items.csv')]
 
     if not instances:
         sys.stderr.write(
