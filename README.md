@@ -5,9 +5,7 @@ Implementações de algoritmos **exatos** (Branch-and-Bound) e **aproximativos**
 ---
 
 ## ✨ Visão geral
-
-Este repositório contém:
-
+<!-- (INALTERADO) -->
 | Pasta / arquivo              | Descrição                                                                                   |
 |------------------------------|----------------------------------------------------------------------------------------------|
 | `src/`                       | Implementações em **Python 3** dos algoritmos: BnB, FPTAS, heurística 2-aproximada.          |
@@ -16,9 +14,10 @@ Este repositório contém:
 | `reports/`                   | Artigo científico em LaTeX (template SBC) + gráficos e tabelas finais.                      |
 | `results/`                   | Saídas brutas: tempos, uso de memória, qualidade da solução.                                |
 | `requirements.txt`           | Facilidades de instalação e automação.                                                      |
-| `config.bat`                 | Atalho: ativa venv + executa workflow
-| `run.bat`                    | Executável para rodar o projeto
+| `config.bat`                 | Atalho: ativa venv + executa workflow                                                       |
+| `run.bat`                    | Executável para rodar o projeto                                                             |
 
+---
 ---
 ## Pseudo-algoritmos
 ### Branch-and-Bound <br>
@@ -126,3 +125,41 @@ cd knapsack-solvers
 
 # Executa o projeto
 ./run.bat
+```
+
+---
+
+## 🗄️ Conjuntos de dados utilizados
+
+| Categoria        | Fonte                                                                                                               |
+|------------------|---------------------------------------------------------------------------------------------------------------------|
+| Low dimensional  | Artemisa/UNICAUCA instances 01 KP – <http://artemisa.unicauca.edu.co/~johnyortega/instances_01_KP/> |
+| Large scale      | Kaggle - “large-scale-01-knapsack-problems” – <https://www.kaggle.com/datasets/sc0v1n0/large-scale-01-knapsack-problems> |
+
+As instâncias são automaticamente baixadas pelo script `experiments/fetch_data.py` na primeira execução.
+
+---
+
+## ⚡ Pipeline de experimentos
+
+```mermaid
+flowchart TD
+    A[Instâncias .csv] --> C{Algoritmo}
+    C -->|BnB| D[utils.solvers.bnb]
+    C -->|FPTAS| E[utils.solvers.fptas]
+    C -->|2-approx| F[utils.solvers.two_approx]
+    D & E & F --> H[results/*.csv]
+    H --> I[reports/article.tex]
+```
+
+---
+
+## 📊 Principais achados empíricos
+
+* **BnB** resolveu **100 %** das instâncias *low‑dimensional* em ≤ 31 s e manteve tempo **≤ 8 ms** nas *large‑scale* analisadas (4/4).
+* **FPTAS (ε = 0.02)** alcançou **erro máximo = 0.14 %** (mediana = 0 %) com tempo mediano **≈ 50 ms**; houve *timeout* em **22 %** das instâncias mais densas.
+* **Heurística 2‑aprox.** finalizou sempre em **< 7 ms**; o desvio médio foi **2.8 %** (máx. 30 %), ficando **≤ 5 % em 75 %** dos casos.
+
+Esses números reproduzem as Tabelas 2 e 3 do artigo.
+
+---
